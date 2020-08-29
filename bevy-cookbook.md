@@ -47,11 +47,11 @@ struct MyInputState {
 
 fn my_input_system(
     mut state: ResMut<MyInputState>,
-    ev_keys: Res<Events<KeyboardInput>,
-    ev_cursor: Res<Events<CursorMoved>,
-    ev_motion: Res<Events<MouseMotion>,
-    ev_mousebtn: Res<Events<MouseButtonInput>,
-    ev_scroll: Res<Events<MouseWheel>,
+    ev_keys: Res<Events<KeyboardInput>>,
+    ev_cursor: Res<Events<CursorMoved>>,
+    ev_motion: Res<Events<MouseMotion>>,
+    ev_mousebtn: Res<Events<MouseButtonInput>>,
+    ev_scroll: Res<Events<MouseWheel>>,
 ) {
     // Keyboard input
     for ev in state.keys.iter(&ev_keys) {
