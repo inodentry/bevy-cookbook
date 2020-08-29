@@ -18,7 +18,23 @@ Table of Contents
 
 ## Input Handling
 
-Input is provided as Bevy events. Create a resource to hold the readers and any other state you might need.
+To simply check the current state of specific keys or mouse buttons, use the `Input<T>` resource:
+
+```rust
+fn my_system(keys: Res<Input<KeyCode>>, btns: Res<Input<MouseButton>>) {
+    // Keyboard input
+    if keys.pressed(KeyCode::Space) {
+        // space is being held down
+    }
+
+    // Mouse buttons
+    if btns.just_pressed(MouseButton::Left) {
+        // a left click just happened
+    }
+}
+```
+
+To detect all activity, use input events. Create a resource to hold the readers and any other state you might need.
 
 ```rust
 struct MyInputState {
@@ -40,15 +56,9 @@ fn my_input_system(
     // Keyboard input
     for ev in state.keys.iter(&ev_keys) {
         if ev.state.is_pressed() {
-            // key went down
-            match ev.key_code {
-                Some(KeyCode::Space) => {
-                    // handle space key
-                }
-                _ => {}
-            }
+            eprintln!("Just pressed key: {:?}", ev.key_code);
         } else {
-            // key went up
+            eprintln!("Just released key: {:?}", ev.key_code);
         }
     }
 
@@ -65,15 +75,9 @@ fn my_input_system(
     // Mouse buttons
     for ev in state.mousebtn.iter(&ev_mousebtn) {
         if ev.state.is_pressed() {
-            // button went down
-            match ev.button {
-                MouseButton::Left => {
-                    // handle left click
-                }
-                _ => {}
-            }
+            eprintln!("Just pressed mouse button: {:?}", ev.button);
         } else {
-            // button went up
+            eprintln!("Just released mouse button: {:?}", ev.button);
         }
     }
 
