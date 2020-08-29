@@ -1,6 +1,6 @@
 # Bevy Cookbook
 
-List of concise recipes for how to do common game development tasks in the Bevy game engine.
+List of concise recipes for how to do common game development tasks in the [Bevy game engine](https://github.com/bevyengine/bevy).
 
 Please help improve it and keep it up to date by contributing on [GitHub](https://github.com/jamadazi/bevy-cookbook).
 
