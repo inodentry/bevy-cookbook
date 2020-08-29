@@ -6,6 +6,16 @@ Please help improve it and keep it up to date by contributing on [GitHub](https:
 
 If you like this, you should also have a look at the [Bevy Cheatsheet](https://github.com/jamadazi/bevy-cheatsheet).
 
+Table of Contents
+=================
+
+* [Input Handling](#input-handling)
+* [Convert screen coordinates to world coordinates](#convert-screen-coordinates-to-world-coordinates)
+  * [2D games](#2d-games)
+  * [3D games](#3d-games)
+* [Grabbing the mouse](#grabbing-the-mouse)
+
+
 ## Input Handling
 
 Input is provided as Bevy events. Create a resource to hold the readers and any other state you might need.
