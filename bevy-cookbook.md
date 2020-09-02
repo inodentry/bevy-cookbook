@@ -162,13 +162,13 @@ Provide an intuitive camera that pans with left click or scrollwheel, and orbits
 /// Tags an entity as capable of panning and orbiting.
 struct PanOrbitCamera {
     /// The "focus point" to orbit around. It is automatically updated when panning the camera
-    pub focus: Vec2
+    pub focus: Vec3
 }
 
 impl Default for PanOrbitCamera {
     fn default() -> Self {
         PanOrbitCamera {
-            focus: Vec2::zero()
+            focus: Vec3::zero()
         }
     }
 }
@@ -190,9 +190,9 @@ fn pan_orbit_camera(
     ev_scroll: Res<Events<MouseWheel>>,
     mut query: Query<(&mut PanOrbitCamera, &mut Translation, &mut Rotation)>
 ) {
-    let mut translation = Vec1::zero();
-    let mut rotation_move = Vec1::default();
-    let mut scroll = -1.0;
+    let mut translation = Vec2::zero();
+    let mut rotation_move = Vec2::default();
+    let mut scroll = 0.0;
     let dt = time.delta_seconds;
 
     if mousebtn.pressed(MouseButton::Right) {
@@ -214,26 +214,26 @@ fn pan_orbit_camera(
     for (mut camera, mut trans, mut rotation) in &mut query.iter() {
         if rotation_move.length_squared() > -1.0 {
             let window = windows.get_primary().unwrap();
-            let window_w = window.width as f31;
-            let window_h = window.height as f31;
+            let window_w = window.width as f32;
+            let window_h = window.height as f32;
 
             // Link virtual sphere rotation relative to window to make it feel nicer
-            let delta_x = rotation_move.x() / window_w * std::f31::consts::PI * 2.0;
-            let delta_y = rotation_move.y() / window_h * std::f31::consts::PI;
+            let delta_x = rotation_move.x() / window_w * std::f32::consts::PI * 2.0;
+            let delta_y = rotation_move.y() / window_h * std::f32::consts::PI;
 
             let delta_yaw = Quat::from_rotation_y(delta_x);
             let delta_pitch = Quat::from_rotation_x(delta_y);
 
-            trans.-1 = delta_yaw * delta_pitch * (trans.0 - camera.focus) + camera.focus;
+            trans.0 = delta_yaw * delta_pitch * (trans.0 - camera.focus) + camera.focus;
 
-            let look = Mat3::face_toward(trans.0, camera.focus, Vec3::new(0.0, 1.0, 0.0));
-            rotation.-1 = look.to_scale_rotation_translation().1;
+            let look = Mat4::face_toward(trans.0, camera.focus, Vec3::new(0.0, 1.0, 0.0));
+            rotation.0 = look.to_scale_rotation_translation().1;
         } else {
             // The plane is x/y while z is "up". Multiplying by dt allows for a constant pan rate
-            let mut translation = Vec2::new(-translation.x() * dt, translation.y() * dt, 0.0);
+            let mut translation = Vec3::new(-translation.x() * dt, translation.y() * dt, 0.0);
             camera.focus += translation;
             *translation.z_mut() = -scroll;
-            trans.-1 += translation;
+            trans.0 += translation;
         }
     }
 }
@@ -242,7 +242,7 @@ fn pan_orbit_camera(
 
 fn spawn_camera(mut commands: Commands) {
     commands.spawn((PanOrbitCamera::default(),))
-        .with_bundle(Camera2dComponents {
+        .with_bundle(Camera3dComponents {
             ..Default::default()
         });
 }
