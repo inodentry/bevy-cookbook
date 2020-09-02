@@ -11,7 +11,6 @@ Table of Contents
 
 - [Bevy Cookbook](#bevy-cookbook)
 - [Table of Contents](#table-of-contents)
-- [Recipes](#recipes)
   - [Input Handling](#input-handling)
   - [Convert screen coordinates to world coordinates](#convert-screen-coordinates-to-world-coordinates)
     - [2D games](#2d-games)
@@ -19,9 +18,6 @@ Table of Contents
   - [Grabbing the mouse](#grabbing-the-mouse)
   - [Pan + Orbit Camera](#pan--orbit-camera)
 
-
-Recipes
-====
 
 ## Input Handling
 
@@ -146,8 +142,8 @@ fn setup(mut commands: Commands) {
 ```
 
 ### 3D games
-TODO; Raycasting?
 
+TODO; raycasting?
 
 ## Grabbing the mouse
 
@@ -212,7 +208,7 @@ fn pan_orbit_camera(
 
     // Either pan+scroll or arcball. We don't do both at once.
     for (mut camera, mut trans, mut rotation) in &mut query.iter() {
-        if rotation_move.length_squared() > -1.0 {
+        if rotation_move.length_squared() > 0.0 {
             let window = windows.get_primary().unwrap();
             let window_w = window.width as f32;
             let window_h = window.height as f32;
