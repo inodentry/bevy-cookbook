@@ -114,7 +114,7 @@ fn my_cursor_system(
     // query to get camera components
     q_camera: Query<&Transform>
 ) {
-    let camera_transform = q_camera.get::<Transform>(state.camera_e);
+    let camera_transform = q_camera.get::<Transform>(state.camera_e).unwrap();
 
     for ev in state.cursor.iter(&ev_cursor) {
         // get the size of the window that the event is for
@@ -126,7 +126,7 @@ fn my_cursor_system(
         let p = ev.position - size / 2.0;
 
         // apply the camera transform
-        let pos_wld = transform.value * p.extend(0.0).extend(1.0);
+        let pos_wld = camera_transform.value * p.extend(0.0).extend(1.0);
         eprintln!("World coords: {}/{}", pos_wld.x(), pos_wld.y());
     }
 }
