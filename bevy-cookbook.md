@@ -146,7 +146,7 @@ fn setup(mut commands: Commands) {
 
 ### 3D games
 
-TODO; raycasting?
+Try the [`bevy_mod_picking` plugin](https://github.com/aevyrie/bevy_mod_picking).
 
 ## Grabbing the mouse
 
