@@ -16,6 +16,7 @@ Table of Contents
     - [2D games](#2d-games)
     - [3D games](#3d-games)
   - [Grabbing the mouse](#grabbing-the-mouse)
+  - [Custom camera projection](#custom-camera-projection)
   - [Pan + Orbit Camera](#pan--orbit-camera)
 
 
@@ -149,6 +150,75 @@ TODO; raycasting?
 
 TODO: show how to grab the mouse for FPS games and such
 
+## Custom camera projection
+
+Bevy currently only offers a standard perspective projection (for 3d) and an orthographic projection based on window pixels (for 2d).
+
+If you need anything else, such as a non-pixel-sized orthographic projection (for 2d or 3d), you need to create your own.
+
+```rust
+use bevy::render::camera::{Camera, CameraProjection, DepthCalculation, VisibleEntities};
+
+struct SimpleOrthoProjection {
+    aspect: f32,
+}
+
+impl CameraProjection for SimpleOrthoProjection {
+    fn get_projection_matrix(&self) -> Mat4 {
+        Mat4::orthographic_rh(
+            -self.aspect, self.aspect, -1.0, 1.0, 0.0, 1000.0
+        )
+    }
+
+    // what to do on window resize
+    fn update(&mut self, width: usize, height: usize) {
+        self.aspect = width as f32 / height as f32;
+    }
+
+    fn depth_calculation(&self) -> DepthCalculation {
+        // for orthographic
+        DepthCalculation::ZDifference
+
+        // otherwise
+        //DepthCalculation::Distance
+    }
+}
+
+impl Default for SimpleOrthoProjection {
+    fn default() -> Self {
+        Self { aspect: 1.0 }
+    }
+}
+
+fn setup(mut commands: Commands) {
+    // same components as the Camera2dComponents bundle,
+    // but with our custom projection
+    commands.spawn((
+        Camera::default(),
+        SimpleOrthoProjection::default(),
+        VisibleEntities::default(),
+        Transform::default(),
+        Translation::default(),
+        Rotation::default(),
+        Scale::default(),
+    ));
+}
+
+fn main() {
+    // need to add a bevy-internal camera system to update
+    // the projection on window resizing
+
+    use bevy::render::camera::camera_system;
+
+    App::build().add_default_plugins()
+        .add_startup_system(setup.system())
+        .add_system_to_stage(
+            bevy::app::stage::POST_UPDATE,
+            camera_system::<SimpleOrthoProjection>.system(),
+        )
+        .run();
+}
+```
 
 ## Pan + Orbit Camera
 
