@@ -11,6 +11,7 @@ Table of Contents
 
 - [Bevy Cookbook](#bevy-cookbook)
 - [Table of Contents](#table-of-contents)
+- [Recipes](#recipes)
   - [Input Handling](#input-handling)
   - [Convert screen coordinates to world coordinates](#convert-screen-coordinates-to-world-coordinates)
     - [2D games](#2d-games)
@@ -19,6 +20,7 @@ Table of Contents
   - [Custom camera projection](#custom-camera-projection)
   - [Pan + Orbit Camera](#pan--orbit-camera)
 
+# Recipes
 
 ## Input Handling
 
