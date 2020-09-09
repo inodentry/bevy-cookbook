@@ -150,7 +150,52 @@ Try the [`bevy_mod_picking` plugin](https://github.com/aevyrie/bevy_mod_picking)
 
 ## Grabbing the mouse
 
-TODO: show how to grab the mouse for FPS games and such
+To grab the mouse and make it invisible for FPS style games we can use an event
+to hook into the `winit` api as below. Note that this will cause events such as
+`CursorMoved` to always trigger with the same position due to the position being
+locked. However, `MouseMotion` events will still fire so the delta can be used.
+
+```rust
+// An example system to lock/unlock the mouse, triggered by a custom event.
+use bevy::{window::WindowId, winit::WinitWindows};
+
+// To track if we want the cursor to be locked or unlocked.
+enum MouseLockEvent {
+    Locked,
+    Unlocked,
+}
+
+#[derive(Default)]
+struct MouseCaptureState {
+    mouse_lock_event_reader: EventReader<MouseLockEvent>,
+}
+
+fn mouse_capture_system(
+    mut state: ResMut<MouseCaptureState>,
+    mouse_lock_events: Res<Events<MouseLockEvent>>,
+    windows: Res<WinitWindows>,
+) {
+    // If we receive a MouseLockEvent then enable or disable the cursor.
+    if let Some(event) = state.mouse_lock_event_reader.latest(&mouse_lock_events) {
+        // We need to get a winit Window to call the appropriate methods on.
+        let window = windows.get_window(WindowId::primary()).unwrap();
+        match event {
+            MouseLockEvent::Locked => {
+                // Locks the cursor in its current place.
+                window.set_cursor_grab(true).unwrap();
+                // Hides the cursor.
+                window.set_cursor_visible(false);
+            }
+            MouseLockEvent::Unlocked => {
+                // Unlocks the cursor so the user can move it again.
+                window.set_cursor_grab(false).unwrap();
+                // Shows the cursor.
+                window.set_cursor_visible(true);
+            }
+        }
+    }
+}
+```
 
 ## Custom camera projection
 
