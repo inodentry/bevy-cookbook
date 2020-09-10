@@ -155,8 +155,9 @@ to hook into the `winit` api as below. Note that this will cause events such as
 `CursorMoved` to always trigger with the same position due to the position being
 locked. However, `MouseMotion` events will still fire so the delta can be used.
 
+An example system to lock/unlock the mouse, triggered by a custom event:
+
 ```rust
-// An example system to lock/unlock the mouse, triggered by a custom event.
 use bevy::{window::WindowId, winit::WinitWindows};
 
 // To track if we want the cursor to be locked or unlocked.
