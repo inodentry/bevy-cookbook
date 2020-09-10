@@ -4,7 +4,7 @@ List of concise recipes for how to do common game development tasks in the [Bevy
 
 Please help improve it and keep it up to date by contributing on [GitHub](https://github.com/jamadazi/bevy-cookbook).
 
-If you like this, you should also have a look at the [Bevy Cheatsheet](https://github.com/jamadazi/bevy-cheatsheet).
+The examples in this cookbook assume you are familiar with the basics of programming in Bevy. If you need a refresher, you can refer to the [Bevy Cheatsheet](https://github.com/jamadazi/bevy-cheatsheet).
 
 Table of Contents
 =================
