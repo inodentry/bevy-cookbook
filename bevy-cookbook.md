@@ -13,6 +13,7 @@ Table of Contents
 - [Table of Contents](#table-of-contents)
 - [Recipes](#recipes)
   - [Input Handling](#input-handling)
+  - [Quitting the App](#quitting-the-app)
   - [Convert screen coordinates to world coordinates](#convert-screen-coordinates-to-world-coordinates)
     - [2D games](#2d-games)
     - [3D games](#3d-games)
@@ -91,6 +92,20 @@ fn my_input_system(
     for ev in state.scroll.iter(&ev_scroll) {
         eprintln!("Scrolled vertically by {} and horizontally by {}.", ev.y, ev.x);
     }
+}
+```
+
+## Quitting the App
+
+To cleanly shut down bevy, send an `AppExit` event from any system.
+
+To simply exit when the Esc key is pressed, bevy provides a system that you can just add to your App:
+
+```rust
+fn main() {
+    App::build().add_default_plugins()
+        .add_system(bevy::input::system::exit_on_esc_system.system())
+        .run();
 }
 ```
 
