@@ -261,9 +261,7 @@ fn setup(mut commands: Commands) {
         SimpleOrthoProjection::default(),
         VisibleEntities::default(),
         Transform::default(),
-        Translation::default(),
-        Rotation::default(),
-        Scale::default(),
+        GlobalTransform::default(),
     ));
 }
 
