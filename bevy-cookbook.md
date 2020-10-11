@@ -223,13 +223,14 @@ If you need anything else, such as a non-pixel-sized orthographic projection (fo
 use bevy::render::camera::{Camera, CameraProjection, DepthCalculation, VisibleEntities};
 
 struct SimpleOrthoProjection {
+    far: f32,
     aspect: f32,
 }
 
 impl CameraProjection for SimpleOrthoProjection {
     fn get_projection_matrix(&self) -> Mat4 {
         Mat4::orthographic_rh(
-            -self.aspect, self.aspect, -1.0, 1.0, 0.0, 1000.0
+            -self.aspect, self.aspect, -1.0, 1.0, 0.0, self.far
         )
     }
 
@@ -249,18 +250,31 @@ impl CameraProjection for SimpleOrthoProjection {
 
 impl Default for SimpleOrthoProjection {
     fn default() -> Self {
-        Self { aspect: 1.0 }
+        Self { far: 1000.0, aspect: 1.0 }
     }
 }
 
 fn setup(mut commands: Commands) {
     // same components as the Camera2dComponents bundle,
     // but with our custom projection
+
+    let proj = SimpleOrthoProjection::default();
+
+    // Need to set the camera name to one of the bevy-internal magic constants,
+    // depending on which camera we are implementing (2D, 3D, or UI).
+    // Bevy uses this name to find the camera and configure the rendering.
+    // Since this example is a 2d camera:
+    let cam_name = bevy::render::render_graph::base::camera::CAMERA2D;
+
+    let mut camera = Camera::default();
+    camera.name = Some(cam_name.to_string());
+
     commands.spawn((
-        Camera::default(),
-        SimpleOrthoProjection::default(),
+        camera,
+        proj,
         VisibleEntities::default(),
-        Transform::default(),
+        // position the camera like bevy would do by default for 2D:
+        Transform::from_translation(Vec3::new(0.0, 0.0, proj.far - 0.1)),
         GlobalTransform::default(),
     ));
 }
