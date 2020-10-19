@@ -144,7 +144,7 @@ fn my_cursor_system(
         let p = ev.position - size / 2.0;
 
         // apply the camera transform
-        let pos_wld = camera_transform.value * p.extend(0.0).extend(1.0);
+        let pos_wld = *camera_transform.value() * p.extend(0.0).extend(1.0);
         eprintln!("World coords: {}/{}", pos_wld.x(), pos_wld.y());
     }
 }
@@ -155,7 +155,7 @@ fn setup(mut commands: Commands) {
     commands.insert_resource(MyCursorState {
         cursor: Default::default(),
         camera_e: e,
-    };
+    });
 }
 ```
 
