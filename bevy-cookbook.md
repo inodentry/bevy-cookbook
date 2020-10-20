@@ -137,7 +137,7 @@ fn my_cursor_system(
     for ev in state.cursor.iter(&ev_cursor) {
         // get the size of the window that the event is for
         let wnd = wnds.get(ev.id).unwrap();
-        let size = Vec2::new(wnd.width as f32, wnd.height as f32);
+        let size = Vec2::new(wnd.width() as f32, wnd.height() as f32);
 
         // the default orthographic projection is in pixels from the center;
         // just undo the translation
@@ -164,6 +164,10 @@ fn setup(mut commands: Commands) {
 Try the [`bevy_mod_picking` plugin](https://github.com/aevyrie/bevy_mod_picking).
 
 ## Grabbing the mouse
+
+**NOTE:** *In the latest git version, Bevy now has an official API for this. The code
+below is now obsolete, but is kept here, because it is still relevant to the
+release version.*
 
 To grab the mouse and make it invisible for FPS style games we can use an event
 to hook into the `winit` api as below. Note that this will cause events such as
@@ -296,6 +300,10 @@ fn main() {
 ```
 
 ## Pan + Orbit Camera
+
+**NOTE:** *this code uses outdated transform APIs and will not compile (without
+modification) on recent Bevy. If you can make it work on recent Bevy, please
+submit a PR to update it.*
 
 Provide an intuitive camera that pans with left click or scrollwheel, and orbits with right click.
 
