@@ -167,9 +167,9 @@ Try the [`bevy_mod_picking` plugin](https://github.com/aevyrie/bevy_mod_picking)
 
 **NOTE:** *In the latest git version, Bevy now provides an API for this.
 See [the official example](https://github.com/bevyengine/bevy/blob/master/examples/window/window_settings.rs)
-for how to use it.
+for how to use it.*
 
-The code below is now obsolete, but is kept here, because it is still relevant
+*The code below is now obsolete, but is kept here, because it is still relevant
 to the release version.*
 
 To grab the mouse and make it invisible for FPS style games we can use an event
