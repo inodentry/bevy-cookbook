@@ -304,9 +304,7 @@ fn main() {
 
 ## Pan + Orbit Camera
 
-**NOTE:** *this code uses outdated transform APIs and will not compile (without
-modification) on recent Bevy. If you can make it work on recent Bevy, please
-submit a PR to update it.*
+**NOTE:** *this code uses new bevy APIs not in the released version `0.2.1`. Use bevy from git, until a new version is released.
 
 Provide an intuitive camera that pans with left click or scrollwheel, and orbits with right click.
 
