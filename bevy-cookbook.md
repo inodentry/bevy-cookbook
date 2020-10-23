@@ -340,7 +340,7 @@ fn pan_orbit_camera(
     ev_motion: Res<Events<MouseMotion>>,
     mousebtn: Res<Input<MouseButton>>,
     ev_scroll: Res<Events<MouseWheel>>,
-    mut query: Query<(&mut PanOrbitCamera, &mut Translation, &mut Rotation)>
+    mut query: Query<(&mut PanOrbitCamera, &mut Transform)>
 ) {
     let mut translation = Vec2::zero();
     let mut rotation_move = Vec2::default();
@@ -363,11 +363,11 @@ fn pan_orbit_camera(
     }
 
     // Either pan+scroll or arcball. We don't do both at once.
-    for (mut camera, mut trans, mut rotation) in &mut query.iter() {
+    for (mut camera, mut trans) in &mut query.iter() {
         if rotation_move.length_squared() > 0.0 {
             let window = windows.get_primary().unwrap();
-            let window_w = window.width as f32;
-            let window_h = window.height as f32;
+            let window_w = window.width() as f32;
+            let window_h = window.height() as f32;
 
             // Link virtual sphere rotation relative to window to make it feel nicer
             let delta_x = rotation_move.x() / window_w * std::f32::consts::PI * 2.0;
@@ -376,16 +376,16 @@ fn pan_orbit_camera(
             let delta_yaw = Quat::from_rotation_y(delta_x);
             let delta_pitch = Quat::from_rotation_x(delta_y);
 
-            trans.0 = delta_yaw * delta_pitch * (trans.0 - camera.focus) + camera.focus;
+            trans.translation = delta_yaw * delta_pitch * (trans.translation - camera.focus) + camera.focus;
 
-            let look = Mat4::face_toward(trans.0, camera.focus, Vec3::new(0.0, 1.0, 0.0));
-            rotation.0 = look.to_scale_rotation_translation().1;
+            let look = Mat4::face_toward(trans.translation, camera.focus, Vec3::new(0.0, 1.0, 0.0));
+            trans.rotation = look.to_scale_rotation_translation().1;
         } else {
             // The plane is x/y while z is "up". Multiplying by dt allows for a constant pan rate
             let mut translation = Vec3::new(-translation.x() * dt, translation.y() * dt, 0.0);
             camera.focus += translation;
             *translation.z_mut() = -scroll;
-            trans.0 += translation;
+            trans.translation += translation;
         }
     }
 }
