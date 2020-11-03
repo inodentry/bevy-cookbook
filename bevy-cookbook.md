@@ -304,21 +304,19 @@ fn main() {
 
 ## Pan + Orbit Camera
 
-**NOTE:** *this code uses new bevy APIs not in the released version `0.2.1`. Use bevy from git, until a new version is released.
-
 Provide an intuitive camera that pans with left click or scrollwheel, and orbits with right click.
 
 ```rust
 /// Tags an entity as capable of panning and orbiting.
 struct PanOrbitCamera {
     /// The "focus point" to orbit around. It is automatically updated when panning the camera
-    pub focus: Vec3
+    pub focus: Vec3,
 }
 
 impl Default for PanOrbitCamera {
     fn default() -> Self {
         PanOrbitCamera {
-            focus: Vec3::zero()
+            focus: Vec3::zero(),
         }
     }
 }
@@ -333,12 +331,12 @@ struct InputState {
 /// Pan the camera with LHold or scrollwheel, orbit with rclick.
 fn pan_orbit_camera(
     time: Res<Time>,
-    mut windows: Res<Windows>,
+    windows: Res<Windows>,
     mut state: ResMut<InputState>,
     ev_motion: Res<Events<MouseMotion>>,
     mousebtn: Res<Input<MouseButton>>,
     ev_scroll: Res<Events<MouseWheel>>,
-    mut query: Query<(&mut PanOrbitCamera, &mut Transform)>
+    mut query: Query<(&mut PanOrbitCamera, &mut Transform)>,
 ) {
     let mut translation = Vec2::zero();
     let mut rotation_move = Vec2::default();
@@ -361,7 +359,7 @@ fn pan_orbit_camera(
     }
 
     // Either pan+scroll or arcball. We don't do both at once.
-    for (mut camera, mut trans) in &mut query.iter() {
+    for (mut camera, mut trans) in query.iter_mut() {
         if rotation_move.length_squared() > 0.0 {
             let window = windows.get_primary().unwrap();
             let window_w = window.width() as f32;
@@ -374,7 +372,8 @@ fn pan_orbit_camera(
             let delta_yaw = Quat::from_rotation_y(delta_x);
             let delta_pitch = Quat::from_rotation_x(delta_y);
 
-            trans.translation = delta_yaw * delta_pitch * (trans.translation - camera.focus) + camera.focus;
+            trans.translation =
+                delta_yaw * delta_pitch * (trans.translation - camera.focus) + camera.focus;
 
             let look = Mat4::face_toward(trans.translation, camera.focus, Vec3::new(0.0, 1.0, 0.0));
             trans.rotation = look.to_scale_rotation_translation().1;
