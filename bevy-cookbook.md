@@ -132,7 +132,7 @@ fn my_cursor_system(
     // query to get camera components
     q_camera: Query<&Transform>
 ) {
-    let camera_transform = q_camera.get::<Transform>(state.camera_e).unwrap();
+    let camera_transform = q_camera.get(state.camera_e).unwrap();
 
     for ev in state.cursor.iter(&ev_cursor) {
         // get the size of the window that the event is for
@@ -144,7 +144,7 @@ fn my_cursor_system(
         let p = ev.position - size / 2.0;
 
         // apply the camera transform
-        let pos_wld = *camera_transform.value() * p.extend(0.0).extend(1.0);
+        let pos_wld = camera_transform.compute_matrix() * p.extend(0.0).extend(1.0);
         eprintln!("World coords: {}/{}", pos_wld.x(), pos_wld.y());
     }
 }
@@ -165,60 +165,7 @@ Try the [`bevy_mod_picking` plugin](https://github.com/aevyrie/bevy_mod_picking)
 
 ## Grabbing the mouse
 
-**NOTE:** *In the latest git version, Bevy now provides an API for this.
-See [the official example](https://github.com/bevyengine/bevy/blob/master/examples/window/window_settings.rs)
-for how to use it.*
-
-*The code below is now obsolete, but is kept here, because it is still relevant
-to the release version.*
-
-To grab the mouse and make it invisible for FPS style games we can use an event
-to hook into the `winit` api as below. Note that this will cause events such as
-`CursorMoved` to always trigger with the same position due to the position being
-locked. However, `MouseMotion` events will still fire so the delta can be used.
-
-An example system to lock/unlock the mouse, triggered by a custom event:
-
-```rust
-use bevy::{window::WindowId, winit::WinitWindows};
-
-// To track if we want the cursor to be locked or unlocked.
-enum MouseLockEvent {
-    Locked,
-    Unlocked,
-}
-
-#[derive(Default)]
-struct MouseCaptureState {
-    mouse_lock_event_reader: EventReader<MouseLockEvent>,
-}
-
-fn mouse_capture_system(
-    mut state: ResMut<MouseCaptureState>,
-    mouse_lock_events: Res<Events<MouseLockEvent>>,
-    windows: Res<WinitWindows>,
-) {
-    // If we receive a MouseLockEvent then enable or disable the cursor.
-    if let Some(event) = state.mouse_lock_event_reader.latest(&mouse_lock_events) {
-        // We need to get a winit Window to call the appropriate methods on.
-        let window = windows.get_window(WindowId::primary()).unwrap();
-        match event {
-            MouseLockEvent::Locked => {
-                // Locks the cursor in its current place.
-                window.set_cursor_grab(true).unwrap();
-                // Hides the cursor.
-                window.set_cursor_visible(false);
-            }
-            MouseLockEvent::Unlocked => {
-                // Unlocks the cursor so the user can move it again.
-                window.set_cursor_grab(false).unwrap();
-                // Shows the cursor.
-                window.set_cursor_visible(true);
-            }
-        }
-    }
-}
-```
+This can be done through bevy's [window settings API](https://github.com/bevyengine/bevy/blob/master/examples/window/window_settings.rs).
 
 ## Custom camera projection
 
@@ -303,8 +250,6 @@ fn main() {
 ```
 
 ## Pan + Orbit Camera
-
-**NOTE:** *this code uses new bevy APIs not in the released version `0.2.1`. Use bevy from git, until a new version is released.
 
 Provide an intuitive camera that pans with left click or scrollwheel, and orbits with right click.
 
