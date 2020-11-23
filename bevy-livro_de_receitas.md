@@ -135,7 +135,7 @@ fn sistema_do_meu_cursor(
 ) {
     let transformar_camera = consulta_da_camera.get(estado.camera_e).unwrap();
 
-    for ev in state.cursor.iter(&ev_cursor) {
+    for ev in estado.cursor.iter(&ev_cursor) {
         // obter o tamanho da janela para a qual o evento se destina
         let wnd = wnds.get(ev.id).unwrap();
         let size = Vec2::new(wnd.width() as f32, wnd.height() as f32);
