@@ -19,7 +19,7 @@ Tabela de conteúdos
     - [Jogos 3D](#jogos-3D)
   - [Pegando o mouse](#pegando-o-mouse)
   - [Projeção de câmera personalizada](#projeção-de-câmera-personalizada)
-  - [Câmera Pan + Orbit](#câmera-pan-+-orbit)
+  - [Câmera Pan e Orbit](#câmera-pan-e-orbit)
 
 # Receitas
 
@@ -251,7 +251,7 @@ fn main() {
 }
 ```
 
-## Câmera Pan + Orbit
+## Câmera Pan e Orbit
 
 Fornece uma câmera intuitiva que gira com o botão esquerdo ou o botão de rolagem e orbita com o clique direito.
 
