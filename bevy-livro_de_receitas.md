@@ -1,25 +1,25 @@
-# Livro de receitas - Bevy Game Engine
+# Livro de receitas para Bevy Game Engine
 
 Lista de receitas concisas de como fazer tarefas comuns de desenvolvimento de jogos no [Bevy Game Engine](https://github.com/bevyengine/bevy).
 
 Ajude a melhorá-lo e mantê-lo atualizado, contribuindo em [GitHub](https://github.com/jamadazi/bevy-cookbook).
 
-Os exemplos neste livro de receitas pressupõem que você esteja familiarizado com os fundamentos da programação em Bevy. Se você precisar de uma atualização, pode consultar o [Folha de dicas - Bevy Game Engine](https://github.com/jamadazi/bevy-cheatsheet).
+Os exemplos neste livro de receitas pressupõem que você esteja familiarizado com os fundamentos da programação em Bevy. Se você precisar de uma atualização, pode consultar o [Folha de dicas para Bevy Game Engine](https://github.com/jamadazi/bevy-cheatsheet).
 
 Tabela de conteúdos
 =================
 
-- [Livro de receitas - Bevy](#bevy-cookbook)
-- [Tabela de conteúdos](#table-of-contents)
-- [Receitas](#recipes)
-  - [Manipulação de entrada](#input-handling)
-  - [Saindo do aplicativo](#quitting-the-app)
-  - [Converta as coordenadas da tela em coordenadas mundiais](#convert-screen-coordinates-to-world-coordinates)
-    - [Jogos 2D](#2d-games)
-    - [Jogos 3D](#3d-games)
-  - [Pegando o mouse](#grabbing-the-mouse)
-  - [Projeção de câmera personalizada](#custom-camera-projection)
-  - [Câmera Pan + Orbit](#pan--orbit-camera)
+- [Livro de receitas para Bevy Game Engine](#livro-de-receitas-para-bevy-game-engine)
+- [Tabela de conteúdos](#tabela-de-conteúdos)
+- [Receitas](#receitas)
+  - [Manipulação de entrada](#manipulação-de-entrada)
+  - [Saindo do aplicativo](#saindo-do-aplicativo)
+  - [Converta as coordenadas da tela em coordenadas mundiais](#converta-as-coordenadas-da-tela-em-coordenadas-mundiais)
+    - [Jogos 2D](#jogos-2D)
+    - [Jogos 3D](#jogos-3D)
+  - [Pegando o mouse](#pegando-o-mouse)
+  - [Projeção de câmera personalizada](#projeção-de-câmera-personalizada)
+  - [Câmera Pan + Orbit](#câmera-pan-+-orbit)
 
 # Receitas
 
@@ -97,9 +97,9 @@ fn meu_sistema_de_entrada(
 
 ## Saindo do aplicativo
 
-Para encerrar o bevy de forma limpa, envie um evento `AppExit` de qualquer sistema.
+Para encerrar o Bevy de forma limpa, envie um evento `AppExit` de qualquer sistema.
 
-Para simplesmente sair quando a tecla Esc for pressionada, o bevy fornece um sistema que você pode simplesmente adicionar ao seu aplicativo:
+Para simplesmente sair quando a tecla Esc for pressionada, o Bevy fornece um sistema que você pode simplesmente adicionar ao seu aplicativo:
 
 ```rust
 fn main() {
@@ -162,7 +162,7 @@ fn setup(mut comandos: Commands) {
 
 ### Jogos 3D
 
-Tente o [`bevy_mod_picking` plugin](https://github.com/aevyrie/bevy_mod_picking).
+Tente o plugin [`bevy_mod_picking`](https://github.com/aevyrie/bevy_mod_picking).
 
 ## Pegando o mouse
 
