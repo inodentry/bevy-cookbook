@@ -6,7 +6,7 @@ Ajude a melhorá-lo e mantê-lo atualizado, contribuindo em [GitHub](https://git
 
 Os exemplos neste livro de receitas pressupõem que você esteja familiarizado com os fundamentos da programação em Bevy. Se você precisar de uma atualização, pode consultar o [Folha de dicas para Bevy Game Engine](https://github.com/jamadazi/bevy-cheatsheet).
 
-Tabela de conteúdos
+Tabela de Conteúdos
 =================
 
 - [Livro de receitas para Bevy Game Engine](#livro-de-receitas-para-bevy-game-engine)
