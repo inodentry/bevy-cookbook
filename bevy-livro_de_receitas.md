@@ -10,20 +10,20 @@ Tabela de conteúdos
 =================
 
 - [Livro de receitas para Bevy Game Engine](#livro-de-receitas-para-bevy-game-engine)
-- [Tabela de conteúdos](#tabela-de-conteúdos)
+- [Tabela de Conteúdos](#tabela-de-conteúdos)
 - [Receitas](#receitas)
-  - [Manipulação de entrada](#manipulação-de-entrada)
-  - [Saindo do aplicativo](#saindo-do-aplicativo)
-  - [Converta as coordenadas da tela em coordenadas mundiais](#converta-as-coordenadas-da-tela-em-coordenadas-mundiais)
+  - [Manipulação de Entrada](#manipulação-de-entrada)
+  - [Saindo do Aplicativo](#saindo-do-aplicativo)
+  - [Converta as Coordenadas da Tela em Coordenadas Mundiais](#converta-as-coordenadas-da-tela-em-coordenadas-mundiais)
     - [Jogos 2D](#jogos-2D)
     - [Jogos 3D](#jogos-3D)
-  - [Pegando o mouse](#pegando-o-mouse)
-  - [Projeção de câmera personalizada](#projeção-de-câmera-personalizada)
-  - [Câmera Pan e Orbit](#câmera-pan-e-orbit)
+  - [Pegando o Mouse](#pegando-o-mouse)
+  - [Projeção de Câmera Personalizada](#projeção-de-câmera-personalizada)
+  - [Câmera Panorâmica e Orbital](#câmera-panorâmica-e-orbital)
 
 # Receitas
 
-## Manipulação de entrada
+## Manipulação de Entrada
 
 Para simplesmente verificar o estado atual de teclas específicas ou botões do mouse, use o recurso `Input<T>`:
 
@@ -95,7 +95,7 @@ fn meu_sistema_de_entrada(
 }
 ```
 
-## Saindo do aplicativo
+## Saindo do Aplicativo
 
 Para encerrar o Bevy de forma limpa, envie um evento `AppExit` de qualquer sistema.
 
@@ -110,7 +110,7 @@ fn main() {
 }
 ```
 
-## Converta as coordenadas da tela em coordenadas mundiais
+## Converta as Coordenadas da Tela em Coordenadas Mundiais
 
 O Bevy ainda não fornece funções para ajudar a descobrir para onde o cursor está apontando. Soluções manuais:
 
@@ -164,11 +164,11 @@ fn setup(mut comandos: Commands) {
 
 Tente o plugin [`bevy_mod_picking`](https://github.com/aevyrie/bevy_mod_picking).
 
-## Pegando o mouse
+## Pegando o Mouse
 
 Isso pode ser feito por meio da [API de configurações da janela](https://github.com/bevyengine/bevy/blob/master/examples/window/window_settings.rs).
 
-## Projeção de câmera personalizada
+## Projeção de Câmera Personalizada
 
 Atualmente, o Bevy oferece apenas uma projeção em perspectiva padrão (para 3D) e uma projeção ortográfica baseada em pixels da janela (para 2D).
 
@@ -251,7 +251,7 @@ fn main() {
 }
 ```
 
-## Câmera Pan e Orbit
+## Câmera Panorâmica e Orbital
 
 Fornece uma câmera intuitiva que gira com o botão esquerdo ou o botão de rolagem e orbita com o clique direito.
 
