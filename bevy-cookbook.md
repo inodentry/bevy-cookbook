@@ -20,6 +20,7 @@ Table of Contents
   - [Grabbing the mouse](#grabbing-the-mouse)
   - [Custom camera projection](#custom-camera-projection)
   - [Pan + Orbit Camera](#pan--orbit-camera)
+  - [Display framerate in console](#display-framerate-in-console)
 
 # Recipes
 
@@ -343,4 +344,21 @@ fn spawn_camera(mut commands: Commands) {
         });
 }
 
+```
+
+## Display framerate in console
+
+Enables you to monitor performance with frames per second (FPS).
+
+```rust
+use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, PrintDiagnosticsPlugin}; 
+
+fn main() {
+    App::build()
+        .add_plugins(DefaultPlugins)
+        .add_plugin(PrintDiagnosticsPlugin::default())                                                                                                                                                                                                                    
+        .add_plugin(FrameTimeDiagnosticsPlugin::default())                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        .add_system(PrintDiagnosticsPlugin::print_diagnostics_system.system())    
+        .run();
+}
 ```
