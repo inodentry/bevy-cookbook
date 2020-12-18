@@ -103,7 +103,8 @@ To simply exit when the Esc key is pressed, bevy provides a system that you can 
 
 ```rust
 fn main() {
-    App::build().add_default_plugins()
+    App::build()
+        .add_plugins(DefaultPlugins)
         .add_system(bevy::input::system::exit_on_esc_system.system())
         .run();
 }
@@ -239,7 +240,8 @@ fn main() {
 
     use bevy::render::camera::camera_system;
 
-    App::build().add_default_plugins()
+    App::build()
+        .add_plugins(DefaultPlugins)
         .add_startup_system(setup.system())
         .add_system_to_stage(
             bevy::app::stage::POST_UPDATE,
