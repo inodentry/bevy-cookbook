@@ -352,6 +352,8 @@ fn spawn_camera(mut commands: Commands) {
 
 Enables you to monitor performance with frames per second (FPS).
 
+*Note (git master)*: `PrintDiagnosticsPlugin` was renamed to `LogDiagnosticsPlugin`.
+
 ```rust
 use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, PrintDiagnosticsPlugin}; 
 
