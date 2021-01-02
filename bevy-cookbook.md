@@ -21,6 +21,7 @@ Table of Contents
   - [Custom camera projection](#custom-camera-projection)
   - [Pan + Orbit Camera](#pan--orbit-camera)
   - [Display framerate in console](#display-framerate-in-console)
+  - [Changing Empty Space/Background Color](#changing-empty-spacebackground-color)
 
 # Recipes
 
@@ -363,6 +364,18 @@ fn main() {
         .add_plugin(PrintDiagnosticsPlugin::default())                                                                                                                                                                                                                    
         .add_plugin(FrameTimeDiagnosticsPlugin::default())                                                                                                                                                                                                                                                                                                                                                                                                                                     
         .add_system(PrintDiagnosticsPlugin::print_diagnostics_system.system())    
+        .run();
+}
+```
+
+## Changing Empty Space/Background Color
+
+Makes empty space the `Color` of your choosing instead of the default gray (`Color::from_rgb(0.4, 0.4, 0.4)`) using the `ClearColor` resource.
+
+```rust
+fn main() {
+    App::build().add_default_plugins()
+        .add_resource(ClearColor(Color::MIDNIGHT_BLUE))
         .run();
 }
 ```
