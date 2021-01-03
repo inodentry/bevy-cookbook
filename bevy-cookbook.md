@@ -21,6 +21,7 @@ Table of Contents
   - [Custom camera projection](#custom-camera-projection)
   - [Pan + Orbit Camera](#pan--orbit-camera)
   - [Display framerate in console](#display-framerate-in-console)
+  - [Changing the Background Color](#changing-the-background-color)
 
 # Recipes
 
@@ -363,6 +364,21 @@ fn main() {
         .add_plugin(PrintDiagnosticsPlugin::default())                                                                                                                                                                                                                    
         .add_plugin(FrameTimeDiagnosticsPlugin::default())                                                                                                                                                                                                                                                                                                                                                                                                                                     
         .add_system(PrintDiagnosticsPlugin::print_diagnostics_system.system())    
+        .run();
+}
+```
+
+## Changing the Background Color
+
+Use the `ClearColor` resource to choose the background color. It must be added before the default plugins.
+
+```rust
+fn main() {
+    App::build()
+        .add_resource(ClearColor(Color::WHITE))
+        // this is the default:
+        //.add_resource(ClearColor(Color::from_rgb(0.4, 0.4, 0.4)))
+        .add_plugins(DefaultPlugins)
         .run();
 }
 ```
