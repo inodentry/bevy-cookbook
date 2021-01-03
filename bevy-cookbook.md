@@ -21,7 +21,7 @@ Table of Contents
   - [Custom camera projection](#custom-camera-projection)
   - [Pan + Orbit Camera](#pan--orbit-camera)
   - [Display framerate in console](#display-framerate-in-console)
-  - [Changing Empty Space/Background Color](#changing-empty-spacebackground-color)
+  - [Changing the Background Color](#changing-the-background-color)
 
 # Recipes
 
@@ -368,14 +368,17 @@ fn main() {
 }
 ```
 
-## Changing Empty Space/Background Color
+## Changing the Background Color
 
-Makes empty space the `Color` of your choosing instead of the default gray (`Color::from_rgb(0.4, 0.4, 0.4)`) using the `ClearColor` resource.
+Use the `ClearColor` resource to choose the background color. It must be added before the default plugins.
 
 ```rust
 fn main() {
-    App::build().add_default_plugins()
-        .add_resource(ClearColor(Color::MIDNIGHT_BLUE))
+    App::build()
+        .add_resource(ClearColor(Color::WHITE))
+        // this is the default:
+        //.add_resource(ClearColor(Color::from_rgb(0.4, 0.4, 0.4)))
+        .add_plugins(DefaultPlugins)
         .run();
 }
 ```
