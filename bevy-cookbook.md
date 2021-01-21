@@ -27,7 +27,11 @@ Table of Contents
 
 ## Input Handling
 
-To simply check the current state of specific keys or mouse buttons, use the `Input<T>` resource:
+Since bevy resources and events are global and accessible from any system, you
+don't need to centralize your input handling code in one place. You can consume
+any relevant inputs wherever you need them.
+
+If you simply need to check the current state of specific keyboard keys or mouse buttons:
 
 ```rust
 fn my_system(keys: Res<Input<KeyCode>>, btns: Res<Input<MouseButton>>) {
@@ -43,27 +47,30 @@ fn my_system(keys: Res<Input<KeyCode>>, btns: Res<Input<MouseButton>>) {
 }
 ```
 
-To detect all activity, use input events. Create a resource to hold the readers and any other state you might need.
+For more powerful input handling, to detect all activity, use input events:
 
 ```rust
-struct MyInputState {
-    keys: EventReader<KeyboardInput>,
-    cursor: EventReader<CursorMoved>,
-    motion: EventReader<MouseMotion>,
-    mousebtn: EventReader<MouseButtonInput>,
-    scroll: EventReader<MouseWheel>,
-}
-
-fn my_input_system(
-    mut state: ResMut<MyInputState>,
+fn my_system(
     ev_keys: Res<Events<KeyboardInput>>,
+    evr_keys: Local<EventReader<KeyboardInput>>,
+
     ev_cursor: Res<Events<CursorMoved>>,
+    evr_cursor: Local<EventReader<CursorMoved>>,
+
     ev_motion: Res<Events<MouseMotion>>,
+    evr_motion: Local<EventReader<MouseMotion>>,
+
     ev_mousebtn: Res<Events<MouseButtonInput>>,
+    evr_mousebtn: Local<EventReader<MouseButtonInput>>,
+
     ev_scroll: Res<Events<MouseWheel>>,
+    evr_scroll: Local<EventReader<MouseWheel>>,
+
+    ev_touch: Res<Events<TouchInput>>,
+    evr_touch: Local<EventReader<TouchInput>>,
 ) {
     // Keyboard input
-    for ev in state.keys.iter(&ev_keys) {
+    for ev in evr_keys.iter(&ev_keys) {
         if ev.state.is_pressed() {
             eprintln!("Just pressed key: {:?}", ev.key_code);
         } else {
@@ -72,17 +79,17 @@ fn my_input_system(
     }
 
     // Absolute cursor position (in window coordinates)
-    for ev in state.cursor.iter(&ev_cursor) {
+    for ev in evr_cursor.iter(&ev_cursor) {
         eprintln!("Cursor at: {}", ev.position);
     }
 
     // Relative mouse motion
-    for ev in state.motion.iter(&ev_motion) {
+    for ev in evr_motion.iter(&ev_motion) {
         eprintln!("Mouse moved {} pixels", ev.delta);
     }
 
     // Mouse buttons
-    for ev in state.mousebtn.iter(&ev_mousebtn) {
+    for ev in evr_mousebtn.iter(&ev_mousebtn) {
         if ev.state.is_pressed() {
             eprintln!("Just pressed mouse button: {:?}", ev.button);
         } else {
@@ -91,8 +98,13 @@ fn my_input_system(
     }
 
     // scrolling (mouse wheel, touchpad, etc.)
-    for ev in state.scroll.iter(&ev_scroll) {
+    for ev in evr_scroll.iter(&ev_scroll) {
         eprintln!("Scrolled vertically by {} and horizontally by {}.", ev.y, ev.x);
+    }
+
+    // touch input
+    for ev in evr_touch.iter(&ev_touch) {
+        eprintln!("Touch {} in {:?} at {}.", ev.id, ev.phase, ev.position);
     }
 }
 ```
